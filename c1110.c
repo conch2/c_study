@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX 1024  // 内存池的大小
 
@@ -38,6 +39,7 @@ void addGredes(STUDENT **);
 void reset_sdt(STUDENT **);
 void addStudent(STUDENT **);
 void delStudent(STUDENT **);
+void findStudent(STUDENT *);
 void showStudents(STUDENT *);
 short whetherOrNotPrint(STUDENT *, short *);
 
@@ -116,12 +118,21 @@ void addStudent(STUDENT **students)   // 增加一个学生
 	fprintf(stdout, "成功添加一名学生！\n\n");
 }
 
+/* 打印全部学生信息
+ * 在打印前会询问用户是否要打印学生成绩。
+ *
+ * Input
+ *   *students: 学生链表
+ * return
+ *   void
+ * */
 void showStudents(STUDENT *students)
 {
 	char s;
 	int num = 0, i;
 	STUDENT *coent;
 	coent = students;
+	int student_report[2];
 	char *cou[] = {"数学", "英语"}; // 记得对应学科数量
 
 	if (students == NULL)
@@ -134,6 +145,7 @@ void showStudents(STUDENT *students)
 	scanf("%c", &s);
 	switch (s)
 	{
+		// 
 		case 10:
 		case 'y':
 		case 'Y':
@@ -143,6 +155,9 @@ void showStudents(STUDENT *students)
 			i = 0;
 			break;
 	}
+
+	/* 遍历students链表并打印
+	 * */
 	while (coent != NULL)
 	{
 		num++;
@@ -153,14 +168,21 @@ void showStudents(STUDENT *students)
 		else 
 			fprintf(stdout, "性别：女\n");
 		fprintf(stdout, "年龄：%u\n", coent->age);
+		// 如果用户需要打印成绩就打印
 		if (i)
 		{
+			// 向学生成绩列表中添加学生成绩
+			student_report[1] = coent->report.english;
+			student_report[0] = coent->report.mathematics; 
+
+			// 如果学生已经录入成绩就打印成绩，如未录入就打印成绩
+			// for 的条件记得对应学生的学科数
 			for (int i=0; i < 2; i++)
 			{
 				if (coent->report.mathematics < 0)
 					printf("还未录入%s的成绩，快去录入吧！\n", cou[i]);
 				else 
-					printf("%s：%d\n", cou[i], coent->report.mathematics);
+					printf("%s：%d\n", cou[i], student_report[i]);
 			}
 		}
 
@@ -172,7 +194,7 @@ void showStudents(STUDENT *students)
 
 /* 找到要找的学生
  *
- * Iput:
+ * Input:
  *  *students: 学生链表
  *  *num: 学生所在的链表位置
  * Return:
@@ -288,6 +310,21 @@ void addGredes(STUDENT **students)
 	printf("录入成功！\n");
 }
 
+void findStudent(STUDENT *student)
+{
+	char *str;
+	STUDENT *coent;
+	coent = student;
+
+	printf("请输入要查找的字符串：");
+	scanf("%s", str);
+
+	// 开始查找
+	while(coent != NULL)
+	{
+	}
+}
+
 int main(void)
 {
 	int inp;
@@ -298,6 +335,7 @@ int main(void)
 	fprintf(stdout, "\t2、查看全部学生\n");
 	fprintf(stdout, "\t3、删除一个学生\n");
 	fprintf(stdout, "\t4、添加一个学生成绩\n");
+	fprintf(stdout, "\t5、查找学生\n");
 	fprintf(stdout, "\t-1、退出系统\n");
 
 	while (inp != -1)
@@ -318,6 +356,9 @@ int main(void)
 				break;
 			case 4:
 				addGredes(&students);
+				break;
+			case 5:
+				//findStudent(student);
 				break;
 			default:
 				break;
