@@ -35,6 +35,7 @@ STUDENT *pool;           // 内存池
 unsigned short conent;   // 用于记录内存池当前的大小
 unsigned int num_of_std; // 当前学生数量
 
+char *reSex(int);
 void addGredes(STUDENT **);
 void reset_sdt(STUDENT **);
 void addStudent(STUDENT **);
@@ -79,6 +80,8 @@ void addStudent(STUDENT **students)   // 增加一个学生
 	printf("请输入姓名：");
 	scanf("%s", now->name);
 	printf("请输入性别：");
+	// 限定性别只能是男或女
+	// 男对应的值是1，女对应的值是0
 	scanf("%s", str);
 	while (1)
 	{
@@ -116,6 +119,15 @@ void addStudent(STUDENT **students)   // 增加一个学生
 
 	num_of_std++;  // 当前学生数量自加1
 	fprintf(stdout, "成功添加一名学生！\n\n");
+}
+
+// 通过传递的数字返回对应的性别
+char *reSex(int num)
+{
+	if (num)
+		return "男";
+	else 
+		return "女";
 }
 
 /* 打印全部学生信息
@@ -163,10 +175,7 @@ void showStudents(STUDENT *students)
 		num++;
 		fprintf(stdout, "\n学生 %d\n", num);
 		fprintf(stdout, "姓名：%s\n", coent->name);
-		if (coent->sex)
-			fprintf(stdout, "性别：男\n");
-		else 
-			fprintf(stdout, "性别：女\n");
+		fprintf(stdout, "性别：%s\n", reSex(coent->sex));
 		fprintf(stdout, "年龄：%u\n", coent->age);
 		// 如果用户需要打印成绩就打印
 		if (i)
@@ -198,7 +207,7 @@ void showStudents(STUDENT *students)
  *  *students: 学生链表
  *  *num: 学生所在的链表位置
  * Return:
- *  是否找到学生，找到返回1，没找到返回0
+ *  是否有学生，有返回1，没找有到返回0
  * */
 short whetherOrNotPrint(STUDENT *students, short *num)
 {
@@ -248,16 +257,20 @@ short whetherOrNotPrint(STUDENT *students, short *num)
  * */
 void delStudent(STUDENT **students)
 {
-	short num;
+	short num;  // 学生的链表位置
 	STUDENT *cen;
 	STUDENT *old;
 	old = (cen = *students);
 
+	/* 找到学生的链表位置
+	 * 即确定 num 的值
+	 * */ 
 	if (!whetherOrNotPrint(*students, &num))
 	{
 		return ;
 	}
 
+	// 定位要删除的学生在链表的位置
 	while (num != 1)
 	{
 		num--;
@@ -284,12 +297,15 @@ void delStudent(STUDENT **students)
 		free(cen);
 	}
 
+	num_of_std--; // 更新学生数量
 	printf("成功删除一个学生信息！\n");
 }
 
+/* 添加（一个）学生成绩
+ * */
 void addGredes(STUDENT **students)
 {
-	short num;
+	short num;  // 学生在链表的位置
 	STUDENT *coent;
 	coent = *students;
 
@@ -310,11 +326,15 @@ void addGredes(STUDENT **students)
 	printf("录入成功！\n");
 }
 
+/* 安装条件查找学生
+ * */
 void findStudent(STUDENT *student)
 {
-	char *str;
+	int i = 1; // 当前所在链表的位置
+	char str[48];
 	STUDENT *coent;
 	coent = student;
+	int numOfFind = 0; // 找到学生的数量
 
 	printf("请输入要查找的字符串：");
 	scanf("%s", str);
@@ -322,6 +342,17 @@ void findStudent(STUDENT *student)
 	// 开始查找
 	while(coent != NULL)
 	{
+		if (!strcmp(str, coent->name))
+		{
+			numOfFind++;
+			// 找到后输出
+			fprintf(stdout, "已找到学生：%d\n", i);
+			fprintf(stdout, "姓名：%s\n", coent->name);
+			fprintf(stdout, "性别：%s\n", reSex(coent->sex));
+			fprintf(stdout, "年龄：%d\n", coent->age);
+		}
+		coent = coent->next;
+		i++;
 	}
 }
 
@@ -358,7 +389,7 @@ int main(void)
 				addGredes(&students);
 				break;
 			case 5:
-				//findStudent(student);
+				findStudent(students);
 				break;
 			default:
 				break;
