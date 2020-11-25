@@ -7,25 +7,25 @@ int main(void)
 	scanf("%d", &num);
 
 	if (num == 1)
-		printf("\n");
+		printf("麻省理工学院 United States 5+ QS Stars\n");
 	else if (num == 2)
-		printf("\n");
+		printf("斯坦福大学 United States 5 QS Stars\n");
 	else if (num == 3)
-		printf("\n");
+		printf("哈佛大学 United States\n");
 	else if (num == 4)
-		printf("\n");
+		printf("加州理工大学（Caltech) United States\n");
 	else if (num == 5)
-		printf("\n");
+		printf("牛津大学 United Kingdom\n");
 	else if (num == 6)
-		printf("\n");
+		printf("苏黎世联邦理工大学（瑞士联邦理工学院） Switzerland\n");
 	else if (num == 7)
-		printf("\n");
+		printf("剑桥大学 United Kingdom\n");
 	else if (num == 8)
-		printf("\n");
+		printf("帝国理工学院 United Kingdom\n");
 	else if (num == 9)
-		printf("\n");
+		printf("芝加哥大学 United States\n");
 	else if (num == 10)
-		printf("\n");
+		printf("伦敦大学学院 United Kingdom\n");
 	else
 		printf("老铁的排名太靠后了，请输入1-10\n");
 
