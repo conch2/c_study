@@ -6,31 +6,35 @@ int main(void)
 	int i=17, j=10, num;
 	char array[257];
 
-	printf("今天你是谁：");
-	scanf("%s", &array);
-
-	if(!strcmp(array, "干饭人"))
+	while(1)
 	{
-		while(j != 0)
+		printf("今天你是谁：");
+		scanf("%s", &array);
+
+		if(!strcmp(array, "干饭人"))
 		{
-			printf("你还有%d次机会，请输入数字：", j);
-			scanf("%d", &num);
-			if(i == num)
+			while(j != 0)
 			{
-				printf("\n恭喜你猜对了！\n\n");
-				break;
+				printf("你还有%d次机会，请输入数字：", j);
+				scanf("%d", &num);
+				if(i == num)
+				{
+					printf("\n恭喜你猜对了！\n\n");
+					break;
+				}
+				else if(i < num)
+					printf("你猜大了\n");
+				else 
+					printf("你猜小了\n");
+				j--;
 			}
-			else if(i < num)
-				printf("你猜大了\n");
-			else 
-				printf("你猜小了\n");
-			j--;
+			if(!j)
+				printf("\n噢，看来你今天不太走运。\n\n正确答案是%d\n\n", i);
+			break;
 		}
-		if(!j)
-			printf("\n噢，看来你今天不太走运。\n\n正确答案是%d\n\n", i);
+		else 
+			printf("\n指令错误！\n\n");
 	}
-	else 
-		printf("\n指令错误！无法进入！\n\n");
 
 	return 0;
 }
